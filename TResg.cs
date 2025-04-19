@@ -77,14 +77,14 @@ namespace TLoginPrj
             {
                 conexao.Open();
 
-                // Verifica se a tabela 'users' existe
+                
                 string checkTableSql = "SELECT count(name) FROM sqlite_master WHERE type='table' AND name='users';";
                 using (var cmdCheckTable = new SQLiteCommand(checkTableSql, conexao))
                 {
                     long tableExists = (long)cmdCheckTable.ExecuteScalar();
                     if (tableExists == 0)
                     {
-                        // Cria a tabela se não existir
+                        
                         string createTableSql = @"CREATE TABLE IF NOT EXISTS users(
                                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                             User TEXT NOT NULL UNIQUE,
@@ -108,13 +108,18 @@ namespace TLoginPrj
         {
             if (TxtPass.PasswordChar == '\0')
             {
-                TxtPass.PasswordChar = '*';  // Mascarar a senha
+                TxtPass.PasswordChar = '*';  
             }
             else
             {
-                TxtPass.PasswordChar = '\0';  // Mostrar a senha
+                TxtPass.PasswordChar = '\0';  
             }
         }
+
+        private void TxtUser_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
-    
+
 }

@@ -42,7 +42,7 @@ namespace TLoginPrj
             {
                 conexao.Open();
 
-                // Primeiro, verifica se a senha antiga é válida
+               
                 string verificarSenhaSql = "SELECT COUNT(*) FROM users WHERE User = @User AND PassWord = @PassWord";
                 using (var cmdVerificar = new SQLiteCommand(verificarSenhaSql, conexao))
                 {
@@ -57,7 +57,7 @@ namespace TLoginPrj
                     }
                 }
 
-                // Atualiza a senha para a nova senha
+               
                 string atualizarSenhaSql = "UPDATE users SET PassWord = @PassWord WHERE User = @User";
                 using (var cmdAtualizar = new SQLiteCommand(atualizarSenhaSql, conexao))
                 {
@@ -92,24 +92,29 @@ namespace TLoginPrj
         {
             if (TxtOldPass.PasswordChar == '\0')
             {
-                TxtOldPass.PasswordChar = '*';  // Mascarar a senha
+                TxtOldPass.PasswordChar = '*'; 
             }
             else
-            
-                TxtOldPass.PasswordChar = '\0';  // Mostrar a senha
-            
+
+                TxtOldPass.PasswordChar = '\0';  
+
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (TxtPass.PasswordChar == '\0')
             {
-                TxtPass.PasswordChar = '*';  // Mascarar a senha
+                TxtPass.PasswordChar = '*';  
             }
             else
             {
-                TxtPass.PasswordChar = '\0';  // Mostrar a senha
+                TxtPass.PasswordChar = '\0';  
             }
+        }
+
+        private void TxtUser_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

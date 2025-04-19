@@ -40,6 +40,7 @@
             TxtMail = new TextBox();
             label6 = new Label();
             checkBox1 = new CheckBox();
+            button1 = new Button();
             SuspendLayout();
             // 
             // BtnRes
@@ -94,6 +95,7 @@
             TxtUser.Name = "TxtUser";
             TxtUser.Size = new Size(100, 23);
             TxtUser.TabIndex = 4;
+            TxtUser.TextChanged += TxtUser_TextChanged;
             // 
             // TxtPass
             // 
@@ -175,11 +177,25 @@
             checkBox1.UseVisualStyleBackColor = true;
             checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.None;
+            button1.AutoSize = true;
+            button1.FlatStyle = FlatStyle.Popup;
+            button1.Location = new Point(702, 12);
+            button1.Name = "button1";
+            button1.Size = new Size(86, 25);
+            button1.TabIndex = 21;
+            button1.Text = "Testes- Email";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // TLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(checkBox1);
             Controls.Add(TxtMail);
             Controls.Add(label6);
@@ -213,5 +229,6 @@
         private TextBox TxtMail;
         private Label label6;
         private CheckBox checkBox1;
+        private Button button1;
     }
 }

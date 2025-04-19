@@ -15,22 +15,22 @@ namespace TLoginPrj
 {
     public partial class TFPassword : Form
     {
-        
+
         private string emailUsuario = string.Empty;
         public TFPassword()
         {
             InitializeComponent();
-            InicializarFormulario(); // Chama o método para inicializar o formulário
+            InicializarFormulario();
         }
 
         private void InicializarFormulario()
         {
-            // Mostra os campos iniciais
+            
             LbLMail.Show();
             TxtEmail.Show();
             BtnCodigo.Show();
 
-            // Esconde os campos do código e nova senha
+            
             LblCodigo.Hide();
             TxtCodigo.Hide();
             BtnConfirmC.Hide();
@@ -38,18 +38,18 @@ namespace TLoginPrj
             TxtNPass.Hide();
             BtnConfirmP.Hide();
 
-            // Limpa os campos
+           
             TxtEmail.Text = "";
             TxtCodigo.Text = "";
             TxtNPass.Text = "";
 
-            // Redefine as posições dos controles (se necessário)
+            
             BtnCodigo.Location = new Point(380, 185);
         }
 
         private void BtnCodigo_Click(object sender, EventArgs e)
         {
-            emailUsuario = TxtEmail.Text.Trim(); // Armazena o e-mail na variável
+            emailUsuario = TxtEmail.Text.Trim();
             if (string.IsNullOrEmpty(emailUsuario))
             {
                 MessageBox.Show("Digite seu e-mail.");
@@ -65,7 +65,7 @@ namespace TLoginPrj
                 {
                     conexao.Open();
 
-                    // Verifica se o e-mail existe
+                    
                     string verificarEmailSql = "SELECT COUNT(*) FROM users WHERE Email = @Email";
                     using (var cmdVerificar = new SQLiteCommand(verificarEmailSql, conexao))
                     {
@@ -79,11 +79,11 @@ namespace TLoginPrj
                         }
                     }
 
-                    // Gera o código de recuperação
+                    
                     string codigo = new Random().Next(100000, 999999).ToString();
                     string dataExpiracao = DateTime.Now.AddMinutes(10).ToString("yyyy-MM-dd HH:mm:ss");
 
-                    // Salva o código no banco de dados
+                    
                     string atualizarSql = "UPDATE users SET CodigoRecuperacao = @Codigo, DataExpiracao = @Expiracao WHERE Email = @Email";
                     using (var cmdAtualizar = new SQLiteCommand(atualizarSql, conexao))
                     {
@@ -93,13 +93,13 @@ namespace TLoginPrj
                         cmdAtualizar.ExecuteNonQuery();
                     }
 
-                    // Chama a função para enviar o código de recuperação por e-mail
+                    
                     EnviarEmail(emailUsuario, codigo);
 
-                    // Exibe os campos para o código de verificação
+                   
                     MessageBox.Show("Código enviado! Verifique seu e-mail.");
 
-                    // Atualiza a visibilidade dos campos
+                    
                     BtnConfirmC.Show();
                     LblCodigo.Show();
                     TxtCodigo.Show();
@@ -156,10 +156,10 @@ namespace TLoginPrj
                                 return;
                             }
 
-                            // ✅ Código correto e dentro do prazo
+                           
                             MessageBox.Show("Código verificado com sucesso! Agora você pode redefinir sua senha.");
 
-                            // Só aqui mostra os campos da nova senha
+                            
                             BtnConfirmC.Hide();
                             LblCodigo.Hide();
                             TxtCodigo.Hide();
@@ -212,7 +212,7 @@ namespace TLoginPrj
                     if (linhasAfetadas > 0)
                     {
                         MessageBox.Show("Senha redefinida com sucesso!");
-                        this.Close(); // ou redirecionar para tela de login
+                        this.Close(); 
                         TLogin tLogin = new TLogin();
                         tLogin.Show();
                     }
@@ -230,28 +230,27 @@ namespace TLoginPrj
         {
             try
             {
-                // Cria a mensagem de e-mail
+                
                 var mensagem = new MimeMessage();
                 mensagem.From.Add(new MailboxAddress("Suporte Técnico", "SupTecTForm@gmail.com"));
-                mensagem.To.Add(new MailboxAddress("", para)); // Destinatário
-                mensagem.Subject = "Código de Recuperação de Senha"; // Assunto
-                mensagem.Body = new TextPart("plain") // Corpo do e-mail
+                mensagem.To.Add(new MailboxAddress("", para)); 
+                mensagem.Subject = "Código de Recuperação de Senha";
+                mensagem.Body = new TextPart("plain") 
                 {
                     Text = $"Seu código de recuperação é: {codigo}"
                 };
 
-                // Configuração do cliente SMTP
+                
                 using (var client = new SmtpClient())
                 {
-                    // Conecta ao servidor SMTP (exemplo com Gmail)
+                    
                     client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
 
-                    // Autentica com seu e-mail e senha
-                    client.Authenticate("suptectform@gmail.com", "xzao trnt zgup exqd");
+                    client.Authenticate("suptectform@gmail.com", "fwjx nfmb nkxu mntp");
 
-                    // Envia a mensagem
+                    
                     client.Send(mensagem);
-                    client.Disconnect(true); // Desconecta do servidor SMTP
+                    client.Disconnect(true); 
                 }
 
                 MessageBox.Show("E-mail enviado com sucesso!");
@@ -260,6 +259,11 @@ namespace TLoginPrj
             {
                 MessageBox.Show("Erro ao enviar e-mail: " + ex.Message);
             }
+        }
+
+        private void TxtEmail_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

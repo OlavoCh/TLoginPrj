@@ -91,12 +91,24 @@ namespace TLoginPrj
         {
             if (TxtPass.PasswordChar == '\0')
             {
-                TxtPass.PasswordChar = '*';  // Mascarar a senha
+                TxtPass.PasswordChar = '*';  
             }
             else
             {
-                TxtPass.PasswordChar = '\0';  // Mostrar a senha
+                TxtPass.PasswordChar = '\0'; 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TFPassword tFPassword = new TFPassword();
+            this.Hide();
+            tFPassword.Show();
+        }
+
+        private void TxtUser_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
